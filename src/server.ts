@@ -1,15 +1,19 @@
 import fastify from 'fastify'
-import { env} from './env'
-import { requirementsRoutes } from './routes/requirements'
+import { env } from './env'
+import { RequirementsRoutes } from './routes/requirements'
+import { UsersRoutes } from './routes/users'
 
 const app = fastify()
 
-app.register(requirementsRoutes, {
-    prefix:'requirements',
+app.register(RequirementsRoutes, {
+    prefix: 'requirements',
+})
+app.register(UsersRoutes, {
+    prefix: 'users',
 })
 
-app.listen ({
+app.listen({
     port: env.PORT
-}).then (() => {
-    console.log('HTTP server running')
+}).then(() => {
+    console.log('✅ HTTP Server Running on http://localhost:' + env.PORT)
 })

@@ -4,12 +4,14 @@ import type { Knex } from "knex";
 export async function up(knex: Knex): Promise<void> {
     await knex.schema.createTable('users', (table) => {
         table.uuid('id').primary()
-        table.string('username').notNullable()
+        table.string('name').notNullable()
+        table.string('last_name').notNullable()
         table.string('password').notNullable()
         table.string('email').notNullable()
+        table.string('phone').notNullable()
+        table.string('institution').notNullable()
         table.timestamp('created_at').defaultTo(knex.fn.now()).notNullable()
         table.timestamp('updated_at').defaultTo(knex.fn.now()).notNullable()
-        table.text('Link').notNullable()  
     })
 }
 
