@@ -1,0 +1,21 @@
+Regras Funcionais:
+
+
+[ ] O usuário poderá criar uma nova conta
+[X ] O usuário poderá criar requisições de equipamentos ou serviços laboratoriais
+[X ] O usuário poderá listar toos os requetimentos que foram solicitados até o momento e seu status
+[X ] O usuário poderá visualizar uma requesição única
+
+[ ] O sistema vai ter um adm geral com mais privilégios e adm local que serao os chefes de cada laboratório
+[ ] Somente o adm geral poderá inserir os nomes dos docentes cadastrados no CPGG
+[ ] Somente o adm geral poderá cadastrar os demais adm secundários
+[ ] Somente o adm  local vai poder confirmar se o equipamento/serviço foi autorizado para o seu laboratório
+[ ] O admn local poderá alterar a data de uso do equipamento/serviço a depender da disponibilidade somente para seu laboratório
+[ ] O admn local poderá alterar o status do equipamento/serviço, de "pending" para "cloased", caso o mesmo já tenha sido entregue
+
+Regras de Negócios
+
+[ ] A requisição constará usuário em débito (quando não entregou o equipamento) ou quite (quando entregou)
+[ ] Quandoa a requisição for por equipamentos, ela poderá ser para uso de: (i) TCC; (ii) Projeto de Pesquisa; (iii) Disciplina; (iv) Aluguel
+[ ] Deve ser possível identificar os usuários entre as requisiçoes e os serviços/equipamentos solicitados
+[ ] O usuário poderá visualizar todas as requisições, mas não poderá alterá-las
