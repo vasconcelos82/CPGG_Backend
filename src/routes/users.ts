@@ -8,7 +8,6 @@ export async function UsersRoutes(app: FastifyInstance) {
 
     //Permite criar usuários
     app.post('/', async (request, reply) => {
-
         const createUsersBodySchema = z.object({
             name: z.string(),
             last_name: z.string(),
@@ -27,7 +26,16 @@ export async function UsersRoutes(app: FastifyInstance) {
             institution,
         } = createUsersBodySchema.parse(request.body)
 
+
+        const user = await knex('users').where('email', email).first()
+
+        if (user) {
+            reply.code(401).send('User already exists!')
+            return;
+        }
+
         const hashedPassword = await bcrypt.hash(password, 10);
+
         await knex('users')
             .insert({
                 id: randomUUID(),
