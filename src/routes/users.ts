@@ -5,7 +5,6 @@ import { randomUUID } from 'node:crypto'
 import { knex } from '../database'
 
 export async function UsersRoutes(app: FastifyInstance) {
-
     //Permite criar usuários
     app.post('/', async (request, reply) => {
         const createUsersBodySchema = z.object({
@@ -59,19 +58,95 @@ export async function UsersRoutes(app: FastifyInstance) {
         }
     })
 
-    // Permite deletar um usuario
-
-    app.delete('/', async () => {
-        const users = await knex('users').select()
-            .del()
-
-        return {
-            users,
-        }
-    })
     // Permite atualizar os dados de um usuario
+    app.put('/', async (request, reply) => {
+        const updateUserBodySchema = z.object({
+            id: z.string().uuid(),
+            name: z.string().optional(),
+            last_name: z.string().optional(),
+            email: z.string().email().optional().optional(),
+            current_password: z.string().min(8).max(32).optional(),
+            new_password: z.string().min(8).max(32).optional(),
+            phone: z.number().optional(),
+            institution: z.string().optional(),
+        });
 
-    // Permite fazer busca por todos os requerimentos
+        const {
+            id,
+            name,
+            last_name,
+            email,
+            current_password,
+            new_password,
+            phone,
+            institution,
+        } = updateUserBodySchema.parse(request.body);
+
+
+
+        const user = await knex('users').where('id', id).first();
+
+        if (!user) {
+            reply.code(401).send('User not found!');
+            return;
+        }
+
+
+        try {
+            if ((current_password && !new_password) || (new_password && !current_password)) {
+
+                reply.code(401).send('You need to submit your current password and new password to change your password!')
+            } else if (current_password && new_password) {
+
+                //Comparação da senha atual enviada pelo usuário com a senha salva no banco de dados
+                const old_password = user.password;
+                const isMatch = await bcrypt.compare(current_password, old_password);
+
+                if (!isMatch) {
+                    reply.code(401).send('The current password is incorrect!');
+                    return;
+                }
+
+                // Criptografar nova senha usando bcrypt
+                const new_passwordHash = await bcrypt.hash(new_password, 10);
+
+                //Atualizar os campos alterando a senha
+                await knex('users')
+                    .where('id', id)
+                    .update({
+                        name,
+                        last_name,
+                        email,
+                        password: new_passwordHash,
+                        phone,
+                        institution,
+                    });
+
+            }
+            else {
+                // Atualizar os campos de usuário sem alterar a senha
+                await knex('users')
+                    .where('id', id)
+                    .update({
+                        name,
+                        last_name,
+                        email,
+                        phone,
+                        institution,
+                    })
+            }
+
+            return reply.status(201).send(); // Send the first element of the updated user array
+        } catch (error) {
+            console.error('Error updating user:', error);
+            reply.code(500).send('Internal server error.');
+            return;
+        }
+
+    });
+
+
+    // Permite deletar um usuário
 
 
 }
