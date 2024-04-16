@@ -84,15 +84,15 @@ export async function UsersRoutes(app: FastifyInstance) {
 
 
 
-        const user = await knex('users').where('id', id).first();
-
-        if (!user) {
-            reply.code(401).send('User not found!');
-            return;
-        }
-
-
         try {
+            const user = await knex('users').where('id', id).first();
+
+            if (!user) {
+                reply.code(401).send('User not found!');
+                return;
+            }
+
+
             if ((current_password && !new_password) || (new_password && !current_password)) {
 
                 reply.code(401).send('You need to submit your current password and new password to change your password!')
@@ -147,6 +147,29 @@ export async function UsersRoutes(app: FastifyInstance) {
 
 
     // Permite deletar um usuário
+    app.delete('/', async (request, reply) => {
+        const deleteUserBodySchema = z.object({
+            id: z.string().uuid()
+        })
 
+        const { id } = deleteUserBodySchema.parse(request.body)
 
+        try {
+            const user = await knex('users').where('id', id).first();
+
+            if (!user) {
+                reply.code(401).send('User does not exist');
+                return;
+            }
+
+            await knex('users')
+                .where('id', id)
+                .delete()
+
+        } catch (error) {
+            console.error('Error deleting user:', error);
+            reply.code(500).send('Internal server error.');
+            return;
+        }
+    })
 }
