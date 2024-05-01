@@ -147,12 +147,12 @@ export async function UsersRoutes(app: FastifyInstance) {
 
 
     // Permite deletar um usuário
-    app.delete('/', async (request, reply) => {
+    app.delete('/:id', async (request, reply) => {
         const deleteUserBodySchema = z.object({
             id: z.string().uuid()
         })
 
-        const { id } = deleteUserBodySchema.parse(request.body)
+        const { id } = deleteUserBodySchema.parse(request.params)
 
         try {
             const user = await knex('users').where('id', id).first();

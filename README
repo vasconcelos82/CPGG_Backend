@@ -3,7 +3,7 @@ Regras Funcionais:
 
 [ ] O usuário poderá criar uma nova conta
 [X ] O usuário poderá criar requisições de equipamentos ou serviços laboratoriais
-[X ] O usuário poderá listar toos os requetimentos que foram solicitados até o momento e seu status
+[X ] O usuário poderá listar toos os requerimentos que foram solicitados até o momento e seu status
 [X ] O usuário poderá visualizar uma requesição única
 
 [ ] O sistema vai ter um adm geral com mais privilégios e adm local que serao os chefes de cada laboratório
