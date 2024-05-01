@@ -59,3 +59,14 @@ export async function RequirementsRoutes(app: FastifyInstance) {
 
 }
 
+
+// Criar Rotas diferentes para equipamentos e serviços => para adicionar os equipamentos
+//e serviços
+
+
+// Criar rota para cadastrar todos os equipamentos e serviços
+// Quantidades
+// Status => emprestado ou não
+// Devolvido ou não
+// Valor do equipamento e do serviços
+

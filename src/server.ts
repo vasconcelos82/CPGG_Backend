@@ -3,6 +3,8 @@ import { env } from './env'
 import { RequirementsRoutes } from './routes/requirements'
 import { UsersRoutes } from './routes/users'
 import { AuthRoutes } from './routes/auth'
+import { EquipmentRoutes } from './routes/equipment'
+import { ServiceRoutes } from './routes/service'
 
 
 const app = fastify()
@@ -18,6 +20,15 @@ app.register(RequirementsRoutes, {
 app.register(UsersRoutes, {
     prefix: 'users',
 })
+
+app.register(EquipmentRoutes, {
+    prefix: 'equipment',
+})
+
+app.register(ServiceRoutes, {
+    prefix: 'service',
+})
+
 
 app.listen({
     port: env.PORT
