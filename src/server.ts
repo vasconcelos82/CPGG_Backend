@@ -3,8 +3,8 @@ import { env } from './env'
 import { RequirementsRoutes } from './routes/requirements'
 import { UsersRoutes } from './routes/users'
 import { AuthRoutes } from './routes/auth'
-import { EquipmentRoutes } from './routes/equipment'
-import { ServiceRoutes } from './routes/service'
+import { EquipmentRoutes } from './routes/equipments'
+import { ServiceRoutes } from './routes/services'
 
 
 const app = fastify()
@@ -22,11 +22,11 @@ app.register(UsersRoutes, {
 })
 
 app.register(EquipmentRoutes, {
-    prefix: 'equipment',
+    prefix: 'equipments',
 })
 
 app.register(ServiceRoutes, {
-    prefix: 'service',
+    prefix: 'services',
 })
 
 
