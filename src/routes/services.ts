@@ -4,7 +4,7 @@ import { z } from 'zod'
 import { randomUUID } from 'node:crypto'
 import { knex } from '../database'
 
-export async function ServiceRoutes(app: FastifyInstance) {
+export async function ServicesRoutes(app: FastifyInstance) {
     app.post('/', async (request, reply) => {
         const createServiceBodySchema = z.object({
             name: z.string(),

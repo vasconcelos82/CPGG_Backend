@@ -3,7 +3,7 @@ import { z } from 'zod'
 import { randomUUID } from 'node:crypto'
 import { knex } from '../database'
 
-export async function EquipmentRoutes(app: FastifyInstance) {
+export async function EquipmentsRoutes(app: FastifyInstance) {
     app.post('/', async (request, reply) => {
         const createEquipmentBodySchema = z.object({
             name: z.string(),
@@ -39,7 +39,7 @@ export async function EquipmentRoutes(app: FastifyInstance) {
 
         return reply.status(201).send()
 
-    
+
     })
 
     // Permite listar os equipamentos
@@ -52,7 +52,7 @@ export async function EquipmentRoutes(app: FastifyInstance) {
     })
 
 
-    
+
 
     //Permite atualizar dados de um equipamento
     app.put('/', async (request, reply) => {
@@ -86,25 +86,25 @@ export async function EquipmentRoutes(app: FastifyInstance) {
                 return;
             }
 
-              //Atualizar os campos 
-              await knex('equipment')
-              .where('id', id)
-              .update({
-                  name,
-                  conservation,
-                  price_UFBA,
-                  price_external,
-                  quantity,
-                  status,
-              });
+            //Atualizar os campos 
+            await knex('equipment')
+                .where('id', id)
+                .update({
+                    name,
+                    conservation,
+                    price_UFBA,
+                    price_external,
+                    quantity,
+                    status,
+                });
 
         } catch (error) {
             console.error('Error updating equipment:', error);
             reply.code(500).send('Internal server error.');
             return;
         }
-        
- 
+
+
     })
 
     // Permite deletar um equipamento
